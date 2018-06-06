@@ -1,0 +1,28 @@
+{
+  "name": "meetup-headsup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashleighj/meetup-headsup.git"
+  },
+  "author": "Ashleigh Waldek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashleighj/meetup-headsup/issues"
+  },
+  "homepage": "https://github.com/ashleighj/meetup-headsup#readme",
+  "dependencies": {
+    "body-parser": "1.18.3",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "node-schedule": "1.3.0",
+    "request": "^2.87.0"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}
