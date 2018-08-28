@@ -1,4 +1,5 @@
 "use strict"
+
 let db = require('mysql')
 let config = require('../config/config')
 

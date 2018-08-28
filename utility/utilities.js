@@ -8,6 +8,20 @@ let decodeHtml = (html) => {
 
 module.exports = {
 
+    getTrimmedUrl: (rawUrl) => {
+        let trimmedUrl
+            = rawUrl
+            .replace(/\"/g, "")
+            .replace(/\'/g, "")
+            .replace("www", "api")
+
+        if (!trimmedUrl.endsWith("/")) {
+            trimmedUrl += "/"
+        }
+
+        return trimmedUrl
+    },
+
     getEventAttachments: (events) => {
         let attachments = []
 
