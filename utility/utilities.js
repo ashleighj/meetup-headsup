@@ -1,19 +1,21 @@
+"use strict"
+
+let decodeHtml = (html) => {
+    return html
+        .replace(/<p>/g,"").replace(/<\/p>/g,"\n\n")
+        .replace(/<br\/>/g,"\n").replace(/\<(.*?)\>/g, "")
+}
+
 module.exports = {
 
-    decodeHtml: (html) => {
-        return html
-            .replace(/<p>/g,"").replace(/<\/p>/g,"\n\n")
-            .replace(/<br\/>/g,"\n").replace(/\<(.*?)\>/g, "");
-    },
-
     getEventAttachments: (events) => {
-        let attachments = [];
+        let attachments = []
 
         for (let i = 0; i < events.length; i++) {
             attachments[attachments.length] = {
                 "title": events[i].name,
                 "title_link": events[i].link,
-                "text": this.decodeHtml(events[i].description),
+                "text": decodeHtml(events[i].description),
                 "color": "#ED1C40",
                 "fields": [
                     {
@@ -26,8 +28,18 @@ module.exports = {
                         "short": true
                     }
                 ]
-            };
+            }
         }
-        return attachments;
+        return attachments
+    },
+
+    getUniqueEventLinks: (events) => {
+        let links = []
+
+        for (let i = 0; i < events.length; i++) {
+            links[links.length] = events[i].link
+        }
+
+        return links
     }
-};
+}
