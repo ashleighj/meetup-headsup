@@ -3,7 +3,7 @@
 let db = require('../database/database')
 let messages = require('../messages/messages')
 
-let recordExists = (slackTeamId) => {
+let checkRecordExists = (slackTeamId) => {
     let existsQuery =
         `select 
             exists(
@@ -38,7 +38,7 @@ module.exports = {
 
         return new Promise((resolve, reject) => {
 
-            recordExists(slackTeamId).then((exists) => {
+            checkRecordExists(slackTeamId).then((exists) => {
 
                 if (!exists) {
                     db.query(insertQuery).then(() => {
@@ -73,5 +73,7 @@ module.exports = {
                     reject(err)
                 })
         })
-    }
+    },
+
+    checkRecordExists: checkRecordExists
 }

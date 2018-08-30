@@ -55,5 +55,13 @@ module.exports = {
         }
 
         return links
+    },
+
+    getDbDateTimeString: (datetime) => {
+        let date = datetime.toISOString().split("T")[0]
+        let time = datetime.toISOString().split("T")[1]
+        time = time.split(".")[0]
+
+        return date + " " + time
     }
 }

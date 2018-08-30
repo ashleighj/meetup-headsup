@@ -2,16 +2,19 @@
 
 let db = require('../database/database')
 let messages = require('../messages/messages')
+let util = require('../utility/utilities')
 
-let recordExists = (userId, slackChannelId, meetupUrl) => {
+let checkRecordExists = (userId, slackChannelId, meetupUrl) => {
     let existsQuery =
-        `select exists(
-            select 1 
-            from event_subscription 
-            where user_id like '${userId}' 
+        `select 
+            exists(
+                select 1 
+                from event_subscription 
+                where user_id like '${userId}' 
                 and slack_channel_id like '${slackChannelId}' 
                 and meetup_url_subscribed like '${meetupUrl}') 
         as already_exists;`
+
 
     return new Promise((resolve, reject) => {
 
@@ -48,13 +51,16 @@ module.exports = {
                   '${slackChannelId}', 
                   '${slackChannelName}', 
                   '${meetupUrl}', 
-                  '${new Date().toISOString().split("T")[0]}', 
+                  '${util.getDbDateTimeString(new Date())}', 
                   '${JSON.stringify(lastEventsPulled)}', 
                   '${responseUrl}');`
 
         return new Promise((resolve, reject) => {
 
-            recordExists(userId, slackChannelId, slackChannelName).then((exists) => {
+            checkRecordExists(
+                userId,
+                slackChannelId,
+                meetupUrl).then((exists) => {
 
                 if (!exists) {
                     db.query(insertQuery).then(() => {
@@ -63,8 +69,9 @@ module.exports = {
                     }, (err) => {
                         reject(err)
                     })
+                } else {
+                    resolve(messages.system.EVENT_SUB_EXISTS)
                 }
-                resolve(messages.system.EVENT_SUB_EXISTS)
 
             },(err) => {
                 reject(err)
